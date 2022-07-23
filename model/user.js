@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const appointment = new Schema({
     date: Date,
     time: String,
-    services:String
-});
+    services: String
+}, { _id: false });
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -34,6 +34,6 @@ const userSchema = new mongoose.Schema({
         required: false
     },
     appointments: [appointment]
-});
+}, { collection: 'User' });
 
 export const User = mongoose.model('User', userSchema);

@@ -1,11 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose";    
 
 const Schema = mongoose.Schema;
-
+const o = Schema.ObjectId;
 const appointment = new Schema({
     date: Date,
     time: String,
-    services: String
+    services: [o],
+    isConfirmed:{
+        type: Boolean,
+        default:false
+    }
 }, { _id: false });
 const userSchema = new mongoose.Schema({
     name: {

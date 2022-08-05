@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
 
 import requireAuth from "./middleware/auth.js";
-
+import adminRoutes from './routes/adminRoutes.js'
 import publicRoute from './routes/publicRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
 
@@ -27,5 +27,6 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use('/user', publicRoute);
 app.use('/customer',requireAuth,customerRoutes);
+app.use('/admin',requireAuth,adminRoutes);
 
 app.listen(PORT, () => console.log(`Server is runnning on port : http://localhost:${PORT}`));

@@ -1,6 +1,6 @@
 import pkg from "jsonwebtoken";
 
-import { User } from "../model/users.js";
+import { User } from "../model/user.js";
 
 const Jwt = pkg;
 

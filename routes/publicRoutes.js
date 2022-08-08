@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 
 
 import { User } from '../model/user.js'
+import { Service } from "../model/services.js";
 
 const Jwt = pkg;
 const router = express.Router();
@@ -28,7 +29,7 @@ router.post('/register', async (req, res) => {
 });
 
 
-router.post("/login", async(req, res) => {
+router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
         return res.status(404).send({
@@ -43,11 +44,16 @@ router.post("/login", async(req, res) => {
     const token = Jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
         expiresIn: 86400 // expires in 24 hours
     });
-    return res.status(400).send({
+    return res.status(200).send({
         jwt: token,
         role: user.role,
         name: user.name
     });
 });
+
+router.get('/services', async (req, res) => {
+    let services = await Service.find();
+    return res.status(200).send({ "services": services });
+})
 
 export default router;

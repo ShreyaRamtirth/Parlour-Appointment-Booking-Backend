@@ -15,9 +15,9 @@ router.post('/addservice', async (req, res) => {
                 message: "Failed to add service"
             });
         }
-    });
-    return res.status(200).send({
-        message: "Success"
+        return res.status(200).send({
+            message: "Success"
+        });
     });
 });
 

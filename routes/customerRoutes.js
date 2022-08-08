@@ -15,9 +15,11 @@ router.post("/bookapppointment", async (req, res) => {
         if (err) {
             return res.send(500, { error: "Failed to Update" });
         }
-        return res.send(200, { message: 'Success' });
+        return res.send(200, { message: 'Appointment booked successfully' });
     });
 
 });
+
+
 
 export default router;

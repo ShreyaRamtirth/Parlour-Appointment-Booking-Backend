@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const serviceSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     description: {
         type: String
@@ -14,7 +15,7 @@ const serviceSchema = new mongoose.Schema({
     },
     dateAdded: {
         type: Date,
-        default: Date.now()
+        default: Date.now().toLocaleString().split(',')[0]
     }
 }, { collection: 'Service' });
 

@@ -5,9 +5,12 @@ const o = Schema.ObjectId;
 const appointment = new Schema({
     date: {
         type:Date,
-        default:new Date().toLocaleDateString()
+        default:new Date().toLocaleDateString().split(',')[0]
     },
-    time: String,
+    time:{
+        type:String,
+        default : new Date().toLocaleDateString().split(',')[1]
+    },
     services: [o],
     isConfirmed:{
         type: Boolean,

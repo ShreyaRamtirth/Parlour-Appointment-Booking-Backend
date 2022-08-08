@@ -16,6 +16,10 @@ const serviceSchema = new mongoose.Schema({
     dateAdded: {
         type: Date,
         default: Date.now().toLocaleString().split(',')[0]
+    },
+    price:{
+        type: Number,
+        required: true
     }
 }, { collection: 'Service' });
 

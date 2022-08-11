@@ -1,17 +1,16 @@
 import mongoose from "mongoose";    
 
 const Schema = mongoose.Schema;
-const o = Schema.ObjectId;
 const appointment = new Schema({
     date: {
-        type:Date,
-        default:new Date().toLocaleDateString().split(',')[0]
+        type:String,
+        default:new Date().toLocaleDateString()
     },
     time:{
         type:String,
-        default : new Date().toLocaleDateString().split(',')[1]
+        default : new Date().toLocaleTimeString()
     },
-    services: [o],
+    services: [String],
     isConfirmed:{
         type: Boolean,
         default:false

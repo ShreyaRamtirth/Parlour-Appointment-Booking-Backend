@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get('/services', async (req, res) => {
-    let services = await Service.find();
+    let services = await Service.find({});
     return res.status(200).send({ "services": services });
 })
 

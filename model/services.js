@@ -4,7 +4,7 @@ const serviceSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique:true
+        unique: true
     },
     description: {
         type: String
@@ -13,11 +13,15 @@ const serviceSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
-    dateAdded: {
+    createdAt: {
         type: Date,
-        default: Date.now().toLocaleString().split(',')[0]
+        default: new Date().toLocaleDateString()
     },
-    price:{
+    price: {
+        type: Number,
+        required: true
+    },
+    duration: {
         type: Number,
         required: true
     }

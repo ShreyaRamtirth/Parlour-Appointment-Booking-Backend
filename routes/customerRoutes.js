@@ -26,8 +26,8 @@ router.post("/bookapppointment", async (req, res) => {
         const replacements = {
             username: user.name,
             services: ser,
-            date : user.appointments.at(-1).date,
-            time : user.appointments.at(-1).time,
+            date : appointment.date,
+            time : appointment.time,
         };
         const htmlToSend = template(replacements);
         let transporter = NodeMailer.createTransport({

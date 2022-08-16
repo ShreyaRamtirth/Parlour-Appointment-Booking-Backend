@@ -3,17 +3,42 @@ import NodeMailer from 'nodemailer';
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
+import multer from "multer";
 
 import { Service } from "../model/services.js";
 import { User } from "../model/user.js";
 import { Appointment } from "../model/appointment.js";
 
 const router = express.Router();
-router.post('/addservice', async (req, res) => {
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, process.env.UPLOAD);
+    },
+    filename: function (req, file, cb) {
+        cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+    }
+});
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+});
+
+router.post('/addservice', upload.single('image'), async (req, res) => {
     const service = new Service({
         name: req.body.name,
         description: req.body.description,
-        isActive: req.body.isActive
+        price: req.body.cost,
+        image: req.file.path
     });
     await service.save((err, result) => {
         if (err) {

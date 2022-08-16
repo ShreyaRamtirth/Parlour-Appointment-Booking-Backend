@@ -9,21 +9,16 @@ const serviceSchema = new mongoose.Schema({
     description: {
         type: String
     },
-    isActive: {
-        type: Boolean,
-        required: true
-    },
     createdAt: {
         type: Date,
-        default: new Date().toLocaleDateString()
+        default: new Date()
     },
     price: {
         type: Number,
         required: true
     },
-    duration: {
-        type: Number,
-        required: true
+    image: {
+        type: String
     }
 }, { collection: 'Service' });
 

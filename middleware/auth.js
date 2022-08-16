@@ -15,21 +15,21 @@ const requireAuth = async (req, res, next) => {
         });
     }
     var dtoken;
-    await Jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+    await Jwt.verify(token, process.env.JWT_SECRET,async (err, decodedToken) => {
         if (err) {
             return res.status(401).send({
                 messaage: "Unauthenticated" + err.messaage
             });
         }
-        dtoken = decodedToken;
-    });
-    const user = await User.findOne({ _id: dtoken._id });
 
-    if (!user) {
-        return res.status(404).send({
-            messaage: "User not found"
-        });
-    }
+        const user = await User.findOne({ _id: decodedToken._id });
+
+        if (!user) {
+            return res.status(404).send({
+                messaage: "User not found"
+            });
+        }
+    });
     next();
 }
 

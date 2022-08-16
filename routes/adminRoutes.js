@@ -28,6 +28,18 @@ router.post('/addservice', async (req, res) => {
     });
 });
 
+router.get('/appointments', async (req, res) => {
+    let result = await Appointment.find({ 'isConfirmed': false });
+    let users = await Promise.all(result.map(async (app, i) => {
+        return User.findOne({ _id: app.user }).then(function (user) {
+            let u = { appointment: app, "user": user }
+            return u
+        });
+    }));
+    return res.status(200).send({ data: users });
+});
+
+
 router.post('/confirmappointment', async (req, res) => {
     const token = req.headers.authorization;
     const __dirname = path.resolve();

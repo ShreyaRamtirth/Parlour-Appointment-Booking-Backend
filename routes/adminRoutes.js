@@ -6,6 +6,7 @@ import * as path from 'path';
 
 import { Service } from "../model/services.js";
 import { User } from "../model/user.js";
+import { Appointment } from "../model/appointment.js";
 
 const router = express.Router();
 router.post('/addservice', async (req, res) => {
@@ -33,18 +34,15 @@ router.post('/confirmappointment', async (req, res) => {
     const filePath = path.join(__dirname, '/templates/confirmEmail.html');
     const source = fs.readFileSync(filePath, 'utf-8').toString();
     const template = handlebars.default.compile(source);
-    let user = await User.findOne({ email: req.body.email });
-    user.appointments.at(-1).isConfirmed = true
-    user.save();
-    
-    let appointment = user.appointments.at(-1);
+    let appointment = await Appointment.findOneAndUpdate({ _id: req.body.id }, { isConfirmed: true });
+    let user = await User.findOne({ _id: appointment.user });
     let ser = appointment.services.join("<br>");
 
     const replacements = {
         username: user.name,
         services: ser,
-        date : appointment.date,
-        time : appointment.time,
+        date: appointment.date,
+        time: appointment.time,
     };
     const htmlToSend = template(replacements);
     let transporter = NodeMailer.createTransport({

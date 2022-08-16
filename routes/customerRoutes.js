@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { User } from "../model/user.js";
+import { Appointment } from "../model/appointment.js";
 const Jwt = pkg;
 
 const router = express.Router();
@@ -18,16 +19,20 @@ router.post("/bookapppointment", async (req, res) => {
     const source = fs.readFileSync(filePath, 'utf-8').toString();
     const template = handlebars.default.compile(source);
     const claims = await Jwt.verify(token, process.env.JWT_SECRET);
-    await User.findOneAndUpdate({ _id: claims._id }, {
-        $push: { appointments: appointment }
-    }).then(async (user) => {
+    let user = await User.findOne({ _id: claims._id })
+    let app = new Appointment(appointment);
+    var ser = appointment.services.join("<br>");
+    app.user = user._id;
+    app.save((err, result) => {
+        if (err) {
+            res.status(400).send({ error: "Unable to book appointment at this moment" });
+        }
 
-        var ser = appointment.services.join("<br>");
         const replacements = {
             username: user.name,
             services: ser,
-            date : appointment.date,
-            time : appointment.time,
+            date: appointment.date,
+            time: appointment.time,
         };
         const htmlToSend = template(replacements);
         let transporter = NodeMailer.createTransport({
@@ -51,9 +56,7 @@ router.post("/bookapppointment", async (req, res) => {
             }
         });
         return res.status(200).send({ message: 'Appointment booked successfully' });
-    }).catch((err) => {
-        return res.status(424).send({ error: "Failed to Update" });
-    });
+    })
 
 });
 

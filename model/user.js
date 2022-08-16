@@ -1,25 +1,6 @@
-import mongoose from "mongoose";    
+import mongoose from "mongoose";
 
-const Schema = mongoose.Schema;
-const appointment = new Schema({
-    date: {
-        type:String,
-        default:new Date().toLocaleDateString()
-    },
-    time:{
-        type:String,
-        default : new Date().toLocaleTimeString()
-    },
-    services: [String],
-    isConfirmed:{
-        type: Boolean,
-        default:false
-    },
-    isCompleted:{
-        type: Boolean,
-        default: false
-    }
-}, { _id: false });
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -45,8 +26,7 @@ const userSchema = new mongoose.Schema({
     otp: {
         type: Number,
         required: false
-    },
-    appointments: [appointment]
+    }
 }, { collection: 'User' });
 
 export const User = mongoose.model('User', userSchema);

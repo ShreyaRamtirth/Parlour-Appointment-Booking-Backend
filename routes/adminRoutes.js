@@ -54,7 +54,7 @@ router.post('/addservice', upload.single('image'), async (req, res) => {
 });
 
 router.post('/appointments', async (req, res) => {
-    
+
     let result = await Appointment.find({ 'isConfirmed': false });
     let users = []
     for (let app of result) {
@@ -64,7 +64,7 @@ router.post('/appointments', async (req, res) => {
 
     if (users.length)
         return res.send({ data: users });
-    return res.send({'message':"No appointments to confirm"});
+    return res.send({ 'message': "No appointments to confirm" });
 });
 
 
@@ -100,12 +100,21 @@ router.post('/confirmappointment', async (req, res) => {
     }
     transporter.sendMail(details, (err) => {
         if (err) {
-            res.status(400).send({
+            return res.status(400).send({
                 messaage: "Error occured"
             });
         }
     });
-    return res.status(200).send({ message: 'Appointment booked successfully' });
+    let result = await Appointment.find({ 'isConfirmed': false });
+    let users = []
+    for (let app of result) {
+        let user = await User.findOne({ _id: app.user });
+        users.push({ appointment: app, "user": user });
+    }
+
+    if (users.length)
+        return res.send({ data: users });
+    return res.send({ 'message': "No appointments to confirm" });
 });
 
 export default router;

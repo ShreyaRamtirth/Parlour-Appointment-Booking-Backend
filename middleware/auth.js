@@ -17,7 +17,7 @@ const requireAuth = async (req, res, next) => {
     await Jwt.verify(token, process.env.JWT_SECRET,async (err, decodedToken) => {
         if (err) {
             return res.status(401).send({
-                messaage: "Unauthenticated" + err.message
+                messaage: "Unauthenticated " + err.message
             });
         }
 
@@ -28,7 +28,7 @@ const requireAuth = async (req, res, next) => {
                 messaage: "User not found"
             });
         }
-        return next();
+        next();
     });
 }
 

@@ -10,6 +10,9 @@ import adminRoutes from './routes/adminRoutes.js'
 import publicRoute from './routes/publicRoutes.js'
 import customerRoutes from './routes/customerRoutes.js'
 import employeeRoutes from './routes/employeeRoutes.js'
+import adminAuth from './middleware/adminAuth.js';
+import employeeAuth from './middleware/employeeAuth.js';
+import customerAuth from './middleware/customerAuth.js';
 
 
 dotenv.config()
@@ -27,8 +30,8 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 app.use('/user', publicRoute);
-app.use('/customer',requireAuth,customerRoutes);
-app.use('/employee',requireAuth,employeeRoutes);
-app.use('/admin',requireAuth,adminRoutes);
+app.use('/customer', requireAuth, customerAuth, customerRoutes);
+app.use('/employee', requireAuth, employeeAuth, employeeRoutes);
+app.use('/admin', requireAuth, adminAuth, adminRoutes);
 
 app.listen(PORT, () => console.log(`Server is runnning on port : http://localhost:${PORT}`));

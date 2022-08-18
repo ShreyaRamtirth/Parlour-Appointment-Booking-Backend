@@ -53,15 +53,18 @@ router.post('/addservice', upload.single('image'), async (req, res) => {
     });
 });
 
-router.get('/appointments', async (req, res) => {
+router.post('/appointments', async (req, res) => {
+    
     let result = await Appointment.find({ 'isConfirmed': false });
-    let users = await Promise.all(result.map(async (app, i) => {
-        return User.findOne({ _id: app.user }).then(function (user) {
-            let u = { appointment: app, "user": user }
-            return u
-        });
-    }));
-    return res.status(200).send({ data: users });
+    let users = []
+    for (let app of result) {
+        let user = await User.findOne({ _id: app.user });
+        users.push({ appointment: app, "user": user });
+    }
+
+    if (users.length)
+        return res.send({ data: users });
+    return res.send({'message':"No appointments to confirm"});
 });
 
 

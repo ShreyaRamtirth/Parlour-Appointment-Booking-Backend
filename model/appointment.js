@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const o = Schema.ObjectId;
 const appointment = new mongoose.Schema({
     date: {
-        type:String,
-        default:new Date().toLocaleDateString()
+        type:Date,
+        default:new Date().toDateString()
     },
     time:{
         type:String,

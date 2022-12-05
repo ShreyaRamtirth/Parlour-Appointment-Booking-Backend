@@ -34,6 +34,7 @@ const upload = multer({
 });
 
 router.post('/addservice', upload.single('image'), async (req, res) => {
+    console.log(req.file.path)
     const service = new Service({
         name: req.body.name,
         description: req.body.description,

@@ -8,6 +8,7 @@ import multer from "multer";
 import { Service } from "../model/services.js";
 import { User } from "../model/user.js";
 import { Appointment } from "../model/appointment.js";
+import { Offer } from "../model/offer.js";
 
 const router = express.Router();
 const storage = multer.diskStorage({
@@ -118,8 +119,15 @@ router.post('/confirmappointment', async (req, res) => {
     return res.send({ 'message': "No appointments to confirm" });
 });
 
-router.post('/addoffer',()=>{
+router.post('/addoffer',(req,res)=>{
     
+    let offer = new Offer({
+        "name":req.body.name,
+        "description":req.body.desc,
+        validTill:req.body.validTill,
+        isActive:req.body.isActive,
+        off:req.body.off
+    });
 })
 
 export default router;

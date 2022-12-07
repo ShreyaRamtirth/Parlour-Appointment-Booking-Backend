@@ -18,9 +18,6 @@ const offerSchema = new mongoose.Schema({
     off: {
         type: Number,
         required: true
-    },
-    services:{
-        type:[String],
     }
 }, { collection: 'Offer' });
 

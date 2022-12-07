@@ -65,7 +65,7 @@ router.post('/appointments', async (req, res) => {
     if (users.length)
         return res.send({ data: users });
     return res.send({ 'message': "No appointments to confirm" });
-});
+}); 
 
 
 router.post('/confirmappointment', async (req, res) => {
@@ -116,5 +116,9 @@ router.post('/confirmappointment', async (req, res) => {
         return res.send({ data: users });
     return res.send({ 'message': "No appointments to confirm" });
 });
+
+router.post('/addoffer',()=>{
+    
+})
 
 export default router;

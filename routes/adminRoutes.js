@@ -97,7 +97,7 @@ router.post('/confirmappointment', async (req, res) => {
     let details = {
         from: process.env.MAIL_ID,
         to: user.email,
-        subject: "Your Appointment Details at Avani Parlour",
+        subject: "Your Appointment Details at Relish Parlour",
         html: htmlToSend
     }
     transporter.sendMail(details, (err) => {
@@ -119,14 +119,25 @@ router.post('/confirmappointment', async (req, res) => {
     return res.send({ 'message': "No appointments to confirm" });
 });
 
-router.post('/addoffer',(req,res)=>{
+router.post('/addoffer', async(req,res)=>{
     
     let offer = new Offer({
         "name":req.body.name,
         "description":req.body.desc,
-        validTill:req.body.validTill,
-        isActive:req.body.isActive,
-        off:req.body.off
+        "validTill":req.body.validTill,
+        "isActive":req.body.isActive,
+        "off":req.body.off
+    });
+    await offer.save((err, result)=>{
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: "Failed to add service"
+            });
+        }
+        return res.status(200).send({
+            message: "Success"
+        });
     });
 })
 

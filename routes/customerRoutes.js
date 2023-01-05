@@ -45,7 +45,7 @@ router.post("/bookapppointment", async (req, res) => {
         let details = {
             from: process.env.MAIL_ID,
             to: user.email,
-            subject: "Your Appointment Details at Avani Parlour",
+            subject: "Your Appointment Details at Relish Parlour",
             html: htmlToSend
         }
         transporter.sendMail(details, (err) => {

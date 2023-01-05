@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 
 import { User } from '../model/user.js'
 import { Service } from "../model/services.js";
+import { Offer } from "../model/offer.js";
 
 const Jwt = pkg;
 const router = express.Router();
@@ -54,6 +55,11 @@ router.post("/login", async (req, res) => {
 router.get('/services', async (req, res) => {
     let services = await Service.find({});
     return res.status(200).send({ "services": services });
+})
+
+router.get('/offers', async (req, res) => {
+    let offers = await Offer.find({});
+    return res.status(200).send({ "offers": offers });
 })
 
 export default router;

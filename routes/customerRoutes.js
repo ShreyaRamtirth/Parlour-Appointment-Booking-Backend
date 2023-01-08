@@ -60,6 +60,20 @@ router.post("/bookapppointment", async (req, res) => {
 
 });
 
+router.post('/userappointments', async (req, res) => {
+    let id = req.query.id;
+    let result = await Appointment.find({ "user": id });
+    // console.log(result);
+    // let users = []
+    // for (let app of result) {
+    //     // let user = await User.findOne({ _id: app.user });
+    //     users.push({ app });
+    // }
+
+    if (result.length)
+        return res.send({ data: result });
+    return res.send({ 'message': "No appointments" });
+}); 
 
 
 export default router;

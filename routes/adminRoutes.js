@@ -78,7 +78,7 @@ router.post('/confirmappointment', async (req, res) => {
     const template = handlebars.default.compile(source);
     let appointment = await Appointment.findOneAndUpdate({ _id: req.body.id }, { isConfirmed: true });
     let user = await User.findOne({ _id: appointment.user });
-    let ser = appointment.services.join("<br>");
+    let ser = appointment.services.join(" ");
 
     const replacements = {
         username: user.name,

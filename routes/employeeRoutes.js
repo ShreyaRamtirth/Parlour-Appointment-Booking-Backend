@@ -18,6 +18,7 @@ router.post('/appointments', async (req, res) => {
 
 router.get('/app', async (req, res) => {
     let id = req.query.id;
+    console.log(id);
     let result = await Appointment.findOne({_id:id });
     let user = await User.findOne({ _id: result.user });
     let u = { appointment: result, "user": user };

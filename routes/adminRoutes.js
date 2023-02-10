@@ -141,4 +141,16 @@ router.post('/addoffer', async(req,res)=>{
     });
 })
 
+
+router.post('/addbeautician', async (req, res) => {
+
+    let result = await User.findOneAndUpdate({ 'email': req.body.email }, {'role': 'employee'}, {
+        returnOriginal: false
+      });
+    
+    if (result)
+        return res.send({ 'message': "User is updated" });
+    return res.send({ 'message': "User is not registered" });
+}); 
+
 export default router;

@@ -21,7 +21,7 @@ router.post('/register', async (req, res) => {
     await user.save((err, result) => {
         if (err) {
             return res.status(424).send({
-                messaage: "Register unsuccessfull"
+                message: "Register unsuccessfull"
             });
         }
         const { password, ...data } = result.toJSON();
@@ -34,12 +34,12 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
         return res.status(404).send({
-            messaage: "user not found"
+            message: "user not found"
         });
     }
     if (!await bcrypt.compare(req.body.password, user.password)) {
         return res.status(400).send({
-            messaage: "Invalid Credentials"
+            message: "Invalid Credentials"
         });
     }
     const token = Jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
@@ -58,7 +58,7 @@ router.get('/services', async (req, res) => {
 })
 
 router.get('/offers', async (req, res) => {
-    let offers = await Offer.find({});
+    let offers = await Offer.find({ "validTill" : { $gte: new Date().toISOString() } });
     return res.status(200).send({ "offers": offers });
 })
 

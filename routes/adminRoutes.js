@@ -103,7 +103,7 @@ router.post('/confirmappointment', async (req, res) => {
     transporter.sendMail(details, (err) => {
         if (err) {
             return res.status(400).send({
-                messaage: "Error occured"
+                message: "Error occured"
             });
         }
     });

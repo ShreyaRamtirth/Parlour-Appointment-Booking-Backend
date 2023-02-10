@@ -51,7 +51,7 @@ router.post("/bookapppointment", async (req, res) => {
         transporter.sendMail(details, (err) => {
             if (err) {
                 res.status(400).send({
-                    messaage: "Error occured"
+                    message: "Error occured"
                 });
             }
         });
@@ -61,19 +61,21 @@ router.post("/bookapppointment", async (req, res) => {
 });
 
 router.post('/userappointments', async (req, res) => {
-    let id = req.query.id;
-    let result = await Appointment.find({ "user": id });
-    // console.log(result);
-    // let users = []
-    // for (let app of result) {
-    //     // let user = await User.findOne({ _id: app.user });
-    //     users.push({ app });
-    // }
-
+    let name = req.body.user
+    let user = await User.findOne({ 'name': name})
+    let id = user._id;
+    let result = await Appointment.find({ "user": id , "date" : { $gte: new Date().toISOString() } });
     if (result.length)
-        return res.send({ data: result });
-    return res.send({ 'message': "No appointments" });
+        return res.status(200).send({ result });
+    return res.status(404).send({ 'message': "No appointments" });
 }); 
 
+router.delete('/cancelappointments', async (req, res) => {
+    let _id = req.body.id
+    let appointment = await Appointment.findOneAndDelete({ '_id': _id })
+    if(appointment)
+        return res.status(200).send({ 'message': "Appointment deleted" });
+    return res.status(404).send({ 'message': "No appointments" });
+}); 
 
 export default router;

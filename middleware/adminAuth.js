@@ -9,12 +9,12 @@ const adminAuth = async (req, res, next) => {
     const user = await User.findOne({ _id: claims._id });
     if (!user) {
         return res.status(404).send({
-            messaage: "User not found"
+            message: "User not found"
         });
     }
     if (user.role != "admin") {
         return res.status(403).send({
-            messaage: "You are not authorized to access this URL"
+            message: "You are not authorized to access this URL"
         });
     }
     next();

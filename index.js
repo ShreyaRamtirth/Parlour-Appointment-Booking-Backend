@@ -29,6 +29,9 @@ app.use(cors({
     origin: "*"
 }));
 app.use(bodyParser.json());
+app.use('/', (req,res)=>{
+    res.json({message: "Hello, Welcome to Relish Parlour"})
+});
 app.use('/user', publicRoute);
 app.use('/customer', requireAuth, customerAuth, customerRoutes);
 app.use('/employee', requireAuth, employeeAuth, employeeRoutes);

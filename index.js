@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGO_URL, () => {
     console.log("Database connected");
 });
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 app.use(cookieParser());
 app.use(cors({

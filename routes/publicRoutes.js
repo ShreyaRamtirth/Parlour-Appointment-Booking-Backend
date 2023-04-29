@@ -10,6 +10,7 @@ import { Offer } from "../model/offer.js";
 const Jwt = pkg;
 const router = express.Router();
 router.post('/register', async (req, res) => {
+    console.log("registeration.....");
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     const user = new User({

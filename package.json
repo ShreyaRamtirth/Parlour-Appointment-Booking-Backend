@@ -1,7 +1,6 @@
 {
   "name": "parlour-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -25,5 +24,15 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShreyaRamtirth/Parlour-Appointment-Booking-Backend.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/ShreyaRamtirth/Parlour-Appointment-Booking-Backend/issues"
+  },
+  "homepage": "https://github.com/ShreyaRamtirth/Parlour-Appointment-Booking-Backend#readme",
+  "description": ""
 }
